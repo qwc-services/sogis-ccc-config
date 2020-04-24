@@ -12,14 +12,11 @@ import requests
 import sys
 import urllib.parse
 
-# add parent dir to path, so shared modules can be imported
-path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
-sys.path.insert(1, path)
+from qwc_services_core.api import Api
+from qwc_services_core.api import CaseInsensitiveArgument
+from qwc_services_core.app import app_nocache
+from qwc_services_core.auth import auth_manager, optional_auth, get_auth_user
 
-from service_lib.api import Api  # noqa: E402
-from service_lib.api import CaseInsensitiveArgument  # noqa: E402
-from service_lib.app import app_nocache  # noqa: E402
-from service_lib.auth import auth_manager, optional_auth, get_auth_user  # noqa: E402
 
 app = Flask(__name__)
 app_nocache(app)

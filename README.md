@@ -91,8 +91,8 @@ The CCC ZoomTo configuration is a JSON object of the form
 This object needs to be saved in JSON serialized form in the `CCC_ZOOMTO_CONFIG` environment variable.
 
 
-Usage/Development
------------------
+Usage
+-----
 
 API documentation:
 
@@ -111,7 +111,29 @@ Example:
     https://geo.so.ch/map?appintegration=baugk&session=6dbb4a63-59b7-4edb-a6e9-1e71db9273ff
 
 
+Development
+-----------
+
+Create a virtual environment:
+
+    virtualenv --python=/usr/bin/python3 .venv
+
+Activate virtual environment:
+
+    source .venv/bin/activate
+
+Install requirements:
+
+    pip install -r requirements.txt
+
+Start local service:
+
+    CONFIG_PATH=/PATH/TO/CONFIGS/ python server.py
+
+
 Testing
 -------
 
-See `../testing/README.md`.
+Run all tests:
+
+    python test.py
