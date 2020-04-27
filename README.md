@@ -1,26 +1,47 @@
-CCC config service
-==================
+SO!GIS CCC config service
+=========================
 
 Configuration for WebGIS side of CCC (Client-Client Context) protocol.
-
-Dependencies
-------------
-
-*None*
 
 
 Configuration
 -------------
 
+The static config files are stored as JSON files in `$CONFIG_PATH` with subdirectories for each tenant,
+e.g. `$CONFIG_PATH/default/*.json`. The default tenant name is `default`.
+
+### CCC config
+
+* [JSON schema](schemas/sogis-ccc-config.json)
+* File location: `$CONFIG_PATH/<tenant>/cccConfig.json`
+
+Example:
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json",
+  "service": "mapinfo",
+  "config": {
+    "clients": [<Client configuration, see below>, ...],
+    "zoomto_data_service_url": "http://qwc-data-service:9090",
+    "zoomto_min_scale": 1000,
+    "zoomto_full_extent": [2590983.475, 1212806.115, 2646267.025, 1262755.009],
+    "zoomto_config": {<ZoomTo Configuration, see below>}
+  }
+}
+```
+
+
 ### Environment variables
 
-| Variable                      | Description                                                                 |
-|-------------------------------|-----------------------------------------------------------------------------|
-| `CCC_CLIENT_CONFIG`           | JSON serialized CCC client configuration, see below.                        |
-| `CCC_ZOOMTO_DATA_SERVICE_URL` | Url to the the data service, defaults to `http://sogis-data-service:9090/`. |
-| `CCC_ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator, defaults to `1000`.  |
-| `CCC_ZOOMTO_CANTON_EXTENT`    | JSON serialized array of full canton extent, defaults to Solothurn extent.  |
-| `CCC_ZOOMTO_CONFIG`           | JSON serialized zoom data configuration, see below.                         |
+Config options in the config file can be overridden by equivalent uppercase environment variables.
+
+| Variable                  | Description                                            |
+|---------------------------|--------------------------------------------------------|
+| `CLIENTS`                 | JSON serialized CCC client configuration, see below.   |
+| `ZOOMTO_DATA_SERVICE_URL` | Url to the the data service.                           |
+| `ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator. |
+| `ZOOMTO_FULL_EXTENT`      | JSON serialized array of full canton extent.           |
+| `ZOOMTO_CONFIG`           | JSON serialized zoom data configuration, see below.    |
 
 
 ### CCC Client Configuration
@@ -110,7 +131,6 @@ Example:
 
     https://geo.so.ch/map?appintegration=baugk&session=6dbb4a63-59b7-4edb-a6e9-1e71db9273ff
 
-
 Development
 -----------
 
@@ -137,3 +157,4 @@ Testing
 Run all tests:
 
     python test.py
+

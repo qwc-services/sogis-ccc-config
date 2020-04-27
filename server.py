@@ -16,6 +16,8 @@ from qwc_services_core.api import Api
 from qwc_services_core.api import CaseInsensitiveArgument
 from qwc_services_core.app import app_nocache
 from qwc_services_core.auth import auth_manager, optional_auth, get_auth_user
+from qwc_services_core.tenant_handler import TenantHandler
+from qwc_services_core.runtime_config import RuntimeConfig
 
 
 app = Flask(__name__)
@@ -29,6 +31,8 @@ Configuration for WebGIS side of CCC (Client-Client Context) protocol.
 app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 
 auth = auth_manager(app, api)
+
+tenant_handler = TenantHandler(app.logger)
 
 
 def mergeBbox(bbox1, bbox2):
@@ -68,7 +72,11 @@ class AppConfig(Resource):
         Returns the CCC client configuration for the specified appId
         """
         args = config_parser.parse_args()
-        app = args['app']
+        appId = args['app']
+
+        tenant = tenant_handler.tenant()
+        config_handler = RuntimeConfig("ccc", app.logger)
+        config = config_handler.tenant_config(tenant)
 
         # Example:
         # {
@@ -81,24 +89,19 @@ class AppConfig(Resource):
         #         "minEditScale": 1000
         #     }
         # }
-        try:
-            config = json.loads(os.getenv("CCC_CLIENT_CONFIG", "{}"))
-        except:
-            api.abort(500, "CCC_CLIENT_CONFIG is not a valid json serialized object")
+        client_config = config.get("clients")
 
-        if not app in config:
-            api.abort(404, 'No configuration for application ' + app)
+        app_config = list(filter(lambda entry: entry.get("id") == appId, client_config))
 
-        appConfig = config[app]
+        if not app_config:
+            api.abort(404, 'No configuration for application ' + appId)
+
+        appConfig = app_config[0]
 
         if not "minEditScale" in appConfig:
-            try:
-                minScale = int(os.getenv("CCC_ZOOMTO_MIN_SCALE", "1000"))
-            except:
-                api.abort(500, "CCC_ZOOMTO_MIN_SCALE is not a valid integer")
-            appConfig["minEditScale"] = minScale
+            appConfig["minEditScale"] = config.get("zoomto_min_scale")
 
-        return jsonify(config[app])
+        return jsonify(appConfig)
 
 
 @api.route("/zoomTo")
@@ -117,19 +120,22 @@ class ZoomTo(Resource):
 
         zoomto = api.payload
 
-        dataService = os.getenv("CCC_ZOOMTO_DATA_SERVICE_URL", "http://sogis-data-service:9090/")
+        tenant = tenant_handler.tenant()
+        config_handler = RuntimeConfig("ccc", app.logger)
+        config = config_handler.tenant_config(tenant)
+
+        dataService = config.get("zoomto_data_service_url")
         if not dataService:
-            api.abort(500, "CCC_ZOOMTO_DATA_SERVICE_URL is not set")
+            api.abort(500, "zoomto_data_service_url is not set")
 
         try:
-            minScale = int(os.getenv("CCC_ZOOMTO_MIN_SCALE", "1000"))
+            minScale = int(config.get("zoomto_min_scale"))
         except:
-            api.abort(500, "CCC_ZOOMTO_MIN_SCALE is not a valid integer")
+            api.abort(500, "zoomto_min_scale is not a valid integer")
 
-        try:
-            cantonExtent = json.loads(os.getenv("CCC_ZOOMTO_CANTON_EXTENT", "[2590983.475, 1212806.115, 2646267.025, 1262755.009]"))
-        except:
-            api.abort(500, "CCC_ZOOMTO_CANTON_EXTENT is not a valid json serialized array")
+        cantonExtent = config.get("zoomto_canton_extent")
+        if not cantonExtent:
+            api.abort(500, "zoomto_canton_extent is empty")
 
 
         # Example:
@@ -148,10 +154,7 @@ class ZoomTo(Resource):
         #         }
         #     ]
         # }
-        try:
-            zoomToConfig = json.loads(os.getenv("CCC_ZOOMTO_CONFIG", "{}"))
-        except:
-            api.abort(500, "CCC_ZOOMTO_CONFIG is not a valid json serialized object")
+        zoomToConfig = config.get("zoomto_config")
 
         if zoomto:
             for i in range(0, len(zoomto["data"])):
@@ -205,5 +208,6 @@ class ZoomTo(Resource):
 
 
 if __name__ == "__main__":
-    print("Starting CCC-Config service...")
+    from flask_cors import CORS
+    CORS(app)
     app.run(host='localhost', port=5021, debug=True)

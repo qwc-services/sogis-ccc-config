@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://git.sourcepole.ch/ktso/somap/-/raw/master/docs/schemas/sogis-ccc-config.json",
+  "title": "CCC configuration Service",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "title": "JSON Schema",
+      "description": "Reference to JSON schema of this config",
+      "type": "string",
+      "format": "uri",
+      "default": "https://git.sourcepole.ch/ktso/somap/-/raw/master/docs/schemas/sogis-ccc-config.json"
+    },
+    "service": {
+      "title": "Service name",
+      "type": "string",
+      "const": "ccc-config"
+    },
+    "config": {
+      "title": "Config options",
+      "type": "object",
+      "properties": {
+        "clients": {
+          "description": "CCC client configuration",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClientConfig"
+          }
+        },
+        "zoomto_data_service_url": {
+          "description": "Url to the the data service",
+          "type": "string",
+          "format": "uri",
+          "default": "http://sogis-data-service:9090"
+        },
+        "zoomto_min_scale": {
+          "description": "Integer specifying the minimum zoom scale denominator",
+          "type": "integer",
+          "default": 1000
+        },
+        "zoomto_full_extent": {
+          "description": "full extent",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "zoomto_config": {
+          "type": "object",
+          "properties": {
+            "locatorType": {
+              "type": "string"
+            },
+            "filters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "dataset": {
+                    "type": "string"
+                  },
+                  "filter": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "dataset",
+                  "filter"
+                ]
+              }
+            }
+          },
+          "required": [
+            "filters",
+            "locatorType"
+          ]
+        }
+      },
+      "required": [
+        "clients",
+        "zoomto_full_extent",
+        "zoomto_config"
+      ]
+    }
+  },
+  "definitions": {
+    "ClientConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "cccServer": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "map": {
+          "type": "string"
+        },
+        "editGeomType": {
+          "type": "string"
+        },
+        "notifyLinkTitle": {
+          "type": "string"
+        },
+        "notifyLayers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "layer": {
+                "type": "string"
+              },
+              "mapping": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "agdi_attr_name": {
+                      "type": "string"
+                    },
+                    "ccc_attr_name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "agdi_attr_name",
+                    "ccc_attr_name"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "layer",
+              "mapping"
+            ]
+          }
+        }
+      },
+      "required": [
+        "cccServer",
+        "editGeomType",
+        "id",
+        "map",
+        "notifyLayers",
+        "notifyLinkTitle",
+        "title"
+      ]
+    }
+  }
+}
