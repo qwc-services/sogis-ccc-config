@@ -25,7 +25,7 @@ Example:
     "zoomto_data_service_url": "http://qwc-data-service:9090",
     "zoomto_min_scale": 1000,
     "zoomto_full_extent": [2590983.475, 1212806.115, 2646267.025, 1262755.009],
-    "zoomto_config": {<ZoomTo Configuration, see below>}
+    "zoomto_config": {<ZoomTo configuration, see below>}
   }
 }
 ```
@@ -57,10 +57,13 @@ The CCC client configuration is a JSON object of the form
             "notifyLayers": [
                 {
                     "layer": "<agdi_layer name>",
-                    "mapping": {
-                        "<agdi_attr_name>": "<ccc_attr_name>",
+                    "mapping": [
+                        {
+                          "agdi_attr_name": "<agdi_attr_name>",
+                          "ccc_attr_name": "<ccc_attr_name>"
+                        },
                         ...
-                    }
+                    ]
                 },
                 ...
             ],
