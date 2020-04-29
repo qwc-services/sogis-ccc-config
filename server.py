@@ -207,6 +207,18 @@ class ZoomTo(Resource):
         })
 
 
+""" readyness probe endpoint """
+@app.route("/ready", methods=['GET'])
+def ready():
+    return jsonify({"status": "OK"})
+
+
+""" liveness probe endpoint """
+@app.route("/healthz", methods=['GET'])
+def healthz():
+    return jsonify({"status": "OK"})
+
+
 if __name__ == "__main__":
     from flask_cors import CORS
     CORS(app)
