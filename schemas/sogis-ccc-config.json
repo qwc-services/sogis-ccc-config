@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://git.sourcepole.ch/ktso/somap/-/raw/master/docs/schemas/sogis-ccc-config.json",
+  "$id": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json",
   "title": "CCC configuration Service",
   "type": "object",
   "properties": {
@@ -9,12 +9,12 @@
       "description": "Reference to JSON schema of this config",
       "type": "string",
       "format": "uri",
-      "default": "https://git.sourcepole.ch/ktso/somap/-/raw/master/docs/schemas/sogis-ccc-config.json"
+      "default": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json"
     },
     "service": {
       "title": "Service name",
       "type": "string",
-      "const": "ccc-config"
+      "const": "ccc"
     },
     "config": {
       "title": "Config options",
