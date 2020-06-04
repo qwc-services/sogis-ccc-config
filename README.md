@@ -1,6 +1,3 @@
-[![](https://github.com/qwc-services/sogis-ccc-config/workflows/build/badge.svg)](https://hub.docker.com/repository/docker/sourcepole/sogis-ccc-config)
-[![](https://img.shields.io/docker/pulls/sourcepole/sogis-ccc-config)](https://hub.docker.com/repository/docker/sourcepole/sogis-ccc-config)
-
 SO!GIS CCC config service
 =========================
 
