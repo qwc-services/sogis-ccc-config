@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from flask import Flask, json, jsonify, request
-from flask_restplus import Api, Resource, reqparse
+from flask_restx import Api, Resource, reqparse
 import os
 import requests
 import sys
