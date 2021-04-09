@@ -97,6 +97,7 @@ class AppConfig(Resource):
             api.abort(404, 'No configuration for application ' + appId)
 
         appConfig = app_config[0]
+        app_config["cccServer"] = config.get("ccc_service_url")
 
         if not "minEditScale" in appConfig:
             appConfig["minEditScale"] = config.get("zoomto_min_scale")
