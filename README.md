@@ -94,7 +94,8 @@ This object needs to be saved in JSON serialized form in the `CCC_CLIENT_CONFIG`
 The CCC ZoomTo configuration is a JSON object of the form
 
     {
-        "<locatorType>": [
+        "locatorType": "<locatorType>",
+        "filters": [
             {
                 "dataset": "<AGDI dataset name>",
                 "filter": <Data service filter expression, see below>,

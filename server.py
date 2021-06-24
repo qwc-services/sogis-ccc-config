@@ -158,11 +158,11 @@ class ZoomTo(Resource):
 
         if zoomto:
             for i in range(0, len(zoomto["data"])):
-                if not zoomto["type"] in zoomToConfig:
+                if zoomto["type"] != zoomToConfig["locatorType"]:
                     continue
-                if i >= len(zoomToConfig[zoomto["type"]]):
+                if i >= len(zoomToConfig["filters"]):
                     continue
-                config = zoomToConfig[zoomto["type"]][i]
+                config = zoomToConfig["filters"][i]
                 if not zoomto["data"][i]:
                     continue
 
