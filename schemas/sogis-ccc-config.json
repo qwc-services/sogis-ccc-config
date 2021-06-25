@@ -30,7 +30,6 @@
         "zoomto_data_service_url": {
           "description": "Url to the the data service",
           "type": "string",
-          "format": "uri",
           "default": "http://sogis-data-service:9090"
         },
         "zoomto_min_scale": {
