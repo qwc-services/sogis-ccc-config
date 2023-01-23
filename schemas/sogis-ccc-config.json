@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json",
+  "$id": "https://github.com/qwc-services/sogis-ccc-config/raw/master/schemas/sogis-ccc-config.json",
   "title": "CCC configuration Service",
   "type": "object",
   "properties": {
@@ -9,7 +9,7 @@
       "description": "Reference to JSON schema of this config",
       "type": "string",
       "format": "uri",
-      "default": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json"
+      "default": "https://github.com/qwc-services/sogis-ccc-config/raw/master/schemas/sogis-ccc-config.json"
     },
     "service": {
       "title": "Service name",
@@ -26,6 +26,10 @@
           "items": {
             "$ref": "#/definitions/ClientConfig"
           }
+        },
+        "ccc_service_url": {
+          "description": "Default CCC server address. Example: ws://localhost:8081/ccc-service",
+          "type": "string"
         },
         "zoomto_data_service_url": {
           "description": "Url to the the data service",
@@ -92,6 +96,7 @@
       },
       "required": [
         "clients",
+        "ccc_service_url",
         "zoomto_full_extent",
         "zoomto_config"
       ]
@@ -102,9 +107,6 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
-        },
-        "cccServer": {
           "type": "string"
         },
         "title": {
@@ -154,7 +156,6 @@
         }
       },
       "required": [
-        "cccServer",
         "editGeomType",
         "id",
         "map",

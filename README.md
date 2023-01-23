@@ -18,10 +18,11 @@ e.g. `$CONFIG_PATH/default/*.json`. The default tenant name is `default`.
 Example:
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/qwc-services/sogis-ccc-config/master/schemas/sogis-ccc-config.json",
+  "$schema": "https://github.com/qwc-services/sogis-ccc-config/raw/master/schemas/sogis-ccc-config.json",
   "service": "mapinfo",
   "config": {
     "clients": [<Client configuration, see below>, ...],
+    "ccc_service_url": "ws://localhost:8081/ccc-service",
     "zoomto_data_service_url": "http://qwc-data-service:9090",
     "zoomto_min_scale": 1000,
     "zoomto_full_extent": [2590983.475, 1212806.115, 2646267.025, 1262755.009],
@@ -35,9 +36,10 @@ Example:
 
 Config options in the config file can be overridden by equivalent uppercase environment variables.
 
-| Variable                  | Description                                            |
+|          Variable         |                      Description                       |
 |---------------------------|--------------------------------------------------------|
 | `CLIENTS`                 | JSON serialized CCC client configuration, see below.   |
+| `CCC_SERVICE_URL`         | CCC server address                                     |
 | `ZOOMTO_DATA_SERVICE_URL` | Url to the the data service.                           |
 | `ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator. |
 | `ZOOMTO_FULL_EXTENT`      | JSON serialized array of full canton extent.           |
@@ -50,7 +52,6 @@ The CCC client configuration is a JSON object of the form
 
     {
         "<appId>": {
-            "cccServer": "<ccc server address>",
             "title": "<Client window title>",
             "map": "<map name>",
             "editGeomType": "<Point|LineString|Polygon>",
@@ -76,7 +77,6 @@ The CCC client configuration is a JSON object of the form
     }
 
 * `appId` corresponds to the application id which passed by the application to the web client via the `appintegration` query parameter.
-* `cccServer` is the CCC server address, for example `ws://localhost:8081/ccc-service`.
 * `title` is the window title to be displayed in the web client.
 * `map` the name of the map to load when the web client is opened by the application.
 * `editGeomType` specifies the type of geometry which is to be created on `createGeoObject`.
