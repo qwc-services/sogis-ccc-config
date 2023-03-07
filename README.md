@@ -3,6 +3,8 @@ SO!GIS CCC config service
 
 Configuration for WebGIS side of CCC (Client-Client Context) protocol.
 
+CCC-Service: https://github.com/sogis/ccc-service/
+
 
 Configuration
 -------------
