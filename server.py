@@ -15,7 +15,7 @@ import urllib.parse
 from qwc_services_core.api import Api
 from qwc_services_core.api import CaseInsensitiveArgument
 from qwc_services_core.app import app_nocache
-from qwc_services_core.auth import auth_manager, optional_auth, get_auth_user
+from qwc_services_core.auth import auth_manager, optional_auth
 from qwc_services_core.tenant_handler import TenantHandler
 from qwc_services_core.runtime_config import RuntimeConfig
 
