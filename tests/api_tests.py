@@ -32,8 +32,8 @@ class ApiTestCase(unittest.TestCase):
                 "notifyLayers": [{"layer": "gemeindegrenzen", "mapping": {"gemeindename": "gemname", "bezirksname": "bezname"}}]
             }
         }
-        os.environ["CCC_CLIENT_CONFIG"] = json.dumps(cccConfig)
-        os.environ["CCC_ZOOMTO_MIN_SCALE"] = "1234"
+        os.environ["CLIENTS"] = json.dumps(cccConfig)
+        os.environ["ZOOMTO_MIN_SCALE"] = "1234"
         response = self.app.get('/?app=testApp')
         self.assertEqual(200, response.status_code, "Status code is not OK")
 
