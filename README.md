@@ -37,13 +37,13 @@ Example:
 
 Config options in the config file can be overridden by equivalent uppercase environment variables.
 
-| Variable                  | Description                                            |
-|---------------------------|--------------------------------------------------------|
-| `CLIENTS`                 | JSON serialized CCC client configuration, see below.   |
-| `ZOOMTO_DATA_SERVICE_URL` | Url to the the data service.                           |
-| `ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator. |
-| `ZOOMTO_FULL_EXTENT`      | JSON serialized array of full canton extent.           |
-| `ZOOMTO_CONFIG`           | JSON serialized zoom data configuration, see below.    |
+| Variable                  | Description                                                      |
+|---------------------------|------------------------------------------------------------------|
+| `CLIENTS`                 | JSON serialized array of CCC client configurations, see below.   |
+| `ZOOMTO_DATA_SERVICE_URL` | Url to the the data service.                                     |
+| `ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator.           |
+| `ZOOMTO_FULL_EXTENT`      | JSON serialized array of full canton extent.                     |
+| `ZOOMTO_CONFIG`           | JSON serialized zoom data configuration, see below.              |
 
 
 ### CCC Client Configuration
@@ -51,30 +51,26 @@ Config options in the config file can be overridden by equivalent uppercase envi
 The CCC client configuration is a JSON object of the form
 
     {
-        "<appId>": {
-            "cccServer": "<ccc server address>",
-            "title": "<Client window title>",
-            "map": "<map name>",
-            "editGeomType": "<Point|LineString|Polygon>",
-            "notifyLayers": [
-                {
-                    "layer": "<agdi_layer name>",
-                    "mapping": [
-                        {
-                          "agdi_attr_name": "<agdi_attr_name>",
-                          "ccc_attr_name": "<ccc_attr_name>"
-                        },
-                        ...
-                    ]
-                },
-                ...
-            ],
-            "notifyLinkTitle": "<link title text>",
-            "minEditScale": <scale denominator>
-        },
-        <appId2>: {
+        "id": "<appId">,
+        "cccServer": "<ccc server address>",
+        "title": "<Client window title>",
+        "map": "<map name>",
+        "editGeomType": "<Point|LineString|Polygon>",
+        "notifyLayers": [
+            {
+                "layer": "<agdi_layer name>",
+                "mapping": [
+                    {
+                        "agdi_attr_name": "<agdi_attr_name>",
+                        "ccc_attr_name": "<ccc_attr_name>"
+                    },
+                    ...
+                ]
+            },
             ...
-        }
+        ],
+        "notifyLinkTitle": "<link title text>",
+        "minEditScale": <scale denominator>
     }
 
 * `appId` corresponds to the application id which passed by the application to the web client via the `appintegration` query parameter.

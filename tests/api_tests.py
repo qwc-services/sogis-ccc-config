@@ -22,20 +22,19 @@ class ApiTestCase(unittest.TestCase):
 
     # submit query
     def test_appconfig(self):
-        cccConfig = {
-            "testApp": {
-                "cccServer": "ws://localhost:8081/ccc-service",
-                "title": "Test App",
-                "initialLayers": ["gemeindegrenzen", "belastete_standorte"],
-                "editGeomType": "Point",
-                "notifyLinkTitle": "Link",
-                "notifyLayers": [{"layer": "gemeindegrenzen", "mapping": {"gemeindename": "gemname", "bezirksname": "bezname"}}]
-            }
-        }
+        cccConfig = [{
+            "id": "testApp",
+            "cccServer": "ws://localhost:8081/ccc-service",
+            "title": "Test App",
+            "initialLayers": ["gemeindegrenzen", "belastete_standorte"],
+            "editGeomType": "Point",
+            "notifyLinkTitle": "Link",
+            "notifyLayers": [{"layer": "gemeindegrenzen", "mapping": {"gemeindename": "gemname", "bezirksname": "bezname"}}]
+        }]
         os.environ["CLIENTS"] = json.dumps(cccConfig)
         os.environ["ZOOMTO_MIN_SCALE"] = "1234"
         response = self.app.get('/?app=testApp')
         self.assertEqual(200, response.status_code, "Status code is not OK")
 
         response_data = json.loads(response.data)
-        self.assertEqual(response_data, {**cccConfig["testApp"], "minEditScale": 1234})
+        self.assertEqual(response_data, {**cccConfig[0], "minEditScale": "1234"})
