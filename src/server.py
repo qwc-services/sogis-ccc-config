@@ -7,6 +7,7 @@
 
 from flask import Flask, json, jsonify, request
 from flask_restx import Api, Resource, reqparse
+import json
 import os
 import requests
 import sys
@@ -90,6 +91,10 @@ class AppConfig(Resource):
         #     }
         # }
         client_config = config.get("clients")
+
+        if isinstance(client_config, str):
+            # JSON set via ENV-Var as str
+            client_config = json.loads(client_config)
 
         app_config = list(filter(lambda entry: entry.get("id") == appId, client_config))
 
