@@ -1,7 +1,8 @@
-FROM sourcepole/qwc-uwsgi-base:alpine-v2024.01.16
+FROM sourcepole/qwc-uwsgi-base:alpine-v2025.01.24
 
-ADD requirements.txt /srv/qwc_service/requirements.txt
+WORKDIR /srv/qwc_service
+ADD pyproject.toml uv.lock ./
 
-RUN pip3 install --no-cache-dir -r /srv/qwc_service/requirements.txt
+RUN uv sync --frozen
 
 ADD src /srv/qwc_service/
