@@ -8,7 +8,6 @@
 from flask import Flask, json, jsonify, request
 from flask_restx import Api, Resource, reqparse
 import json
-import os
 import requests
 import sys
 import urllib.parse
@@ -17,7 +16,8 @@ from qwc_services_core.api import Api
 from qwc_services_core.api import CaseInsensitiveArgument
 from qwc_services_core.app import app_nocache
 from qwc_services_core.auth import auth_manager, optional_auth
-from qwc_services_core.tenant_handler import TenantHandler
+from qwc_services_core.tenant_handler import (
+    TenantHandler, TenantPrefixMiddleware, TenantSessionInterface)
 from qwc_services_core.runtime_config import RuntimeConfig
 
 
@@ -34,7 +34,8 @@ app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 auth = auth_manager(app, api)
 
 tenant_handler = TenantHandler(app.logger)
-
+app.wsgi_app = TenantPrefixMiddleware(app.wsgi_app)
+app.session_interface = TenantSessionInterface()
 
 def mergeBbox(bbox1, bbox2):
     if not bbox1:
