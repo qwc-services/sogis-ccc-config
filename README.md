@@ -37,14 +37,6 @@ Example:
 
 Config options in the config file can be overridden by equivalent uppercase environment variables.
 
-| Variable                  | Description                                                      |
-|---------------------------|------------------------------------------------------------------|
-| `CLIENTS`                 | JSON serialized array of CCC client configurations, see below.   |
-| `ZOOMTO_DATA_SERVICE_URL` | Url to the the data service.                                     |
-| `ZOOMTO_MIN_SCALE`        | Integer specifying the minimum zoom scale denominator.           |
-| `ZOOMTO_FULL_EXTENT`      | JSON serialized array of full canton extent.                     |
-| `ZOOMTO_CONFIG`           | JSON serialized zoom data configuration, see below.              |
-
 
 ### CCC Client Configuration
 
@@ -113,15 +105,6 @@ The CCC ZoomTo configuration is a JSON object of the form
 
 This object needs to be saved in JSON serialized form in the `CCC_ZOOMTO_CONFIG` environment variable.
 
-
-Usage
------
-
-API documentation:
-
-    http://localhost:5021/api/
-
-
 ### Pairing of Web Client with third party application
 
 Third-party applications are expected to pair with the Web Client by opening appending following parameters to the Web Client URL
@@ -133,20 +116,27 @@ Example:
 
     https://geo.so.ch/map?appintegration=baugk&session=6dbb4a63-59b7-4edb-a6e9-1e71db9273ff
 
-Development
+Run locally
 -----------
 
-Install dependencies and run service:
+Install dependencies and run:
 
+    export CONFIG_PATH=<CONFIG_PATH>
     uv run src/server.py
 
-With config path:
+To use configs from a `qwc-docker` setup, set `CONFIG_PATH=<...>/qwc-docker/volumes/config`.
 
-    CONFIG_PATH=/PATH/TO/CONFIGS/ uv run src/server.py
+Set `FLASK_DEBUG=1` for additional debug output.
 
-Testing
--------
+Set `FLASK_RUN_PORT=<port>` to change the default port (default: `5000`).
 
-Run all tests:
+API documentation:
 
-    python test.py
+    http://localhost:$FLASK_RUN_PORT/api/
+
+Docker usage
+------------
+
+The Docker image is published on [Dockerhub](https://hub.docker.com/r/sourcepole/sogis-ccc-config).
+
+See sample [docker-compose.yml](https://github.com/qwc-services/qwc-docker/blob/master/docker-compose-example.yml) of [qwc-docker](https://github.com/qwc-services/qwc-docker).
