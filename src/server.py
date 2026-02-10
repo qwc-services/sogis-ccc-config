@@ -8,6 +8,7 @@
 from flask import Flask, json, jsonify, request
 from flask_restx import Api, Resource, reqparse
 import json
+import os
 import requests
 import sys
 import urllib.parse
@@ -226,4 +227,4 @@ def healthz():
 
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=5021, debug=True)
+    app.run(host='localhost', port=os.environ.get("FLASK_RUN_PORT", 5000), debug=True)
