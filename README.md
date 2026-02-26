@@ -47,6 +47,7 @@ The CCC client configuration is a JSON object of the form
         "cccServer": "<ccc server address>",
         "title": "<Client window title>",
         "map": "<map name>",
+        "layers": ["<layer_name>", ...],
         "editGeomType": "<Point|LineString|Polygon>",
         "notifyLayers": [
             {
@@ -68,7 +69,8 @@ The CCC client configuration is a JSON object of the form
 * `appId` corresponds to the application id which passed by the application to the web client via the `appintegration` query parameter.
 * `cccServer` is the CCC server address, for example `ws://localhost:8081/ccc-service`.
 * `title` is the window title to be displayed in the web client.
-* `map` the name of the map to load when the web client is opened by the application.
+* `map` is the name of the map to load when the web client is opened by the application.
+* `layers`, which can be specified instead of `map`, is a list of layers to load when the web client is opened by the application.
 * `editGeomType` specifies the type of geometry which is to be created on `createGeoObject`.
 * `notifyLayers` is a list of layers whose feature attributes table should contain a link which sends `notifyGeoObjectSelected` messages when clicked. Each entry of the list must contain:
   * `layer`: the technical layer name
