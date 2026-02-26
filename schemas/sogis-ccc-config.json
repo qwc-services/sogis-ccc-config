@@ -113,6 +113,12 @@
         "map": {
           "type": "string"
         },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "editGeomType": {
           "type": "string"
         },
@@ -157,10 +163,17 @@
         "cccServer",
         "editGeomType",
         "id",
-        "map",
         "notifyLayers",
         "notifyLinkTitle",
         "title"
+      ],
+      "oneOf": [
+        {
+          "required": ["map"]
+        },
+        {
+          "required": ["layers"]
+        }
       ]
     }
   }
