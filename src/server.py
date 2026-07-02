@@ -23,6 +23,7 @@ from qwc_services_core.runtime_config import RuntimeConfig
 
 
 app = Flask(__name__)
+app.config['RESTX_NO_DEFAULT_ROOT_RULE'] = True
 app_nocache(app)
 api = Api(app, version='1.0', title='CCC config service API',
           description="""API for SO!MAP CCC config service.
